@@ -128,7 +128,7 @@ HEADER
 .login-form .header span {
 	font-size: 11px;
 	line-height: 16px;
-	color: #678889;
+	color: red;/*#678889;*/
 	text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
 }
 
@@ -165,6 +165,10 @@ CONTENT
 	margin-top: 25px;
 }
 
+.login-form .content .name {
+	margin-bottom: 25px;
+}
+
 .login-form .content .input:hover {
 	background: #dfe9ec;
 	color: #414848;
@@ -195,12 +199,12 @@ CONTENT
 }
 
 .user-icon {
-	top:147px; /* Positioning fix for slide-in, got lazy to think up of simpler method. */
+	top:185px; /* Positioning fix for slide-in, got lazy to think up of simpler method. */
 	background: rgba(65,72,72,0.75) url(../images/user-icon.png) no-repeat center;	
 }
 
 .pass-icon {
-	top:221px;
+	top:261px;
 	background: rgba(65,72,72,0.75) url(../images/pass-icon.png) no-repeat center;
 }
 
