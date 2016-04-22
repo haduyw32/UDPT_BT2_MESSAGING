@@ -4,14 +4,19 @@ var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/udpt';
 
 
-function insertUser (data) {
+function insertUser (data, callback) {
+	var docOut = 1;
   	var insertDocument = function(db, callback) {
 		db.collection('userInfo').insertOne( {
 			"name": data.name,
 			"_id": data.email,
 			"pass": data.pass
 		}, function(err, result) {
-    		assert.equal(err, null);
+			if (err) {
+				docOut = 0;
+				callback();
+				return;
+			}
     		console.log("Inserted a document into the userInfo collection.");
     		callback();
   		});
@@ -21,6 +26,7 @@ function insertUser (data) {
  		assert.equal(null, err);
   		insertDocument(db, function() {
       		db.close();
+      		callback(docOut);
   		});
 	});
 }

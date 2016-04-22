@@ -16,11 +16,15 @@ module.exports = function (app) {
       			console.log('Thieu thong tin dang ki');
 				return invalid();
 			}
-			db.insertUser(data);
+			db.insertUser(data, function(doc) {
+				if (doc == 0) {
+					invalid ();
+				}
+			});
       	})
 
 		function invalid () {
-			return res.render('signup.ect', { title: 'signup' });
+			return res.render('signup.ect', { ShowCaution: true });
 		}
 	});
 //-----------------------------------------------------------
