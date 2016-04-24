@@ -3,11 +3,6 @@ var router = express.Router();
 var login = require('./login');
 
 
-
-router.get('/', function(req, res) {
-res.render('index.ect', { title: 'home', a: 'trang demo' });
-});
-
 router.get('/login', function(req, res) {
 	res.render('login.ect', { title: 'Login' });
 });
