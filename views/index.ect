@@ -1,5 +1,53 @@
-<% extend './layouts/main' %>
+<html>
+    <head>
+        <title>Home</title>
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+    <% if @wuser? : %> //save côkie
+        function setCookie(cname, cvalue) {
+            document.cookie = cname + "=" + cvalue + ";";
+        }
+        $(document).ready(function() {
+            var email = "<%-@wuser %>";
+            var pass = "<%-@wpass %>";
+            setCookie("cemail", email);
+            setCookie("cpass", pass);
+            //$.post("http://localhost:3000/login", {email: email, pass: pass},  function(data) {
+                //window.location.href="/login";
+            //});
+        });
+    <% else : %>  //check cookie
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length,c.length);
+                }
+            }
+            return "";
+        }
 
-<div>
-<h1><%-@a %></h1>	
-</div>
+        function checkCookie() {
+            var username=getCookie("cemail");
+            var pass=getCookie("cpass");
+            if (username!="" && pass!="") {
+                return true;
+            } else {
+               return false;
+            }
+        }
+        if (checkCookie() == false) {
+            window.location.href="/login";
+        }
+    <% end %>
+    </script>
+    </head>
+    <body>        
+    <p id="t"> home</p>
+    </body>
+</html>
