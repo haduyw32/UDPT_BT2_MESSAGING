@@ -1,5 +1,7 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <link href="default.css" rel="stylesheet" type="text/css">
         <title>Home</title>
         <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
@@ -12,9 +14,7 @@
             var pass = "<%-@wpass %>";
             setCookie("cemail", email);
             setCookie("cpass", pass);
-            //$.post("http://localhost:3000/login", {email: email, pass: pass},  function(data) {
-                //window.location.href="/login";
-            //});
+            window.location.href="/";
         });
     <% else : %>  //check cookie
         function getCookie(cname) {
@@ -47,7 +47,61 @@
     <% end %>
     </script>
     </head>
-    <body>        
-    <p id="t"> home</p>
+    <body>
+       <div class"divM">
+           <div class="g1">
+               <div class="c00">
+                   <div class="mes"><p>Messenger</p></div>
+               </div>
+               <div class="c10">
+                    <div>
+                        <script type="text/javascript">
+                            function FindFriend(elm) {
+                                var username=getCookie("cemail");
+                                $.post("/addfriend", {email: username, txt: elm.value},  function(data) {
+                                    if (data == 'done') {
+                                        alert("Đã thêm bạn " + elm.value + " thành công");
+                                    }
+                                    else {
+                                        alert("Tài khoản này không tồn tại");
+                                    }
+                                });                                
+                            }
+                        </script>
+                        <label class="lablec01"><input type="text" class="lablec01in"  placeholder="Tìm bạn" autocomplete="off" onkeydown="if (event.keyCode == 13) FindFriend(this)"></input></label>
+                    </div>
+                    <div>
+                        <ul class="convList">
+                            <a href=""><li class="lli">
+                                <p>TTTT</p>
+                            </li></a>
+                            <a><li class ="lli">
+                                <p>TTTT</p>
+                            </li></a>
+                        </ul>
+                    </div>
+                </div>
+           </div>
+           <div class="g2">
+               <div class="c01">
+                   <div style="min-width: 85%; float: left;">TT tin nhắn</div>
+                   <script>
+                        function logout() {
+                            document.cookie = "cemail=;";
+                            document.cookie = "cpass=;";
+                            window.location.href="/login";
+                        }
+                   </script>
+                   <div class="logout"><a href=""><img onclick="logout()" src="images\logout.png" width="40" style="vertical-align:bottom"/></a></div>
+               </div>
+               <div class="c11">
+                   conten
+               </div>
+               <div class="inmes">
+                <input name="pass" type="text" class="newmes" placeholder="Nhập tin nhắn mới..."/>
+               </div>
+           </div>
+       </div>
     </body>
 </html>
+
