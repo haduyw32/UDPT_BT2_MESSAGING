@@ -22,8 +22,21 @@ function insertUser (data, callback) {
   		});
 	};
 
+	var insertbegin = function(db) {
+		db.collection('listFriend').insertOne( {
+			"_id": data.email,
+			"friend": []
+		}, function(err, result) {
+			if (err) {
+				docOut = 0;
+				return;
+			}
+  		});
+	};
+
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
+ 		insertbegin(db);
   		insertDocument(db, function() {
       		db.close();
       		callback(docOut);
@@ -53,5 +66,52 @@ function loginUser (data, callback) {
 	});
 }
 
+function findFriend (data, callback) { //hoan thanh: 1, loi: 0
+	var Out = 1;
+	var findUser = function(db, callback) {
+	var cursor =db.collection('userInfo').find( { name: data.txt } );
+	cursor.each(function(err, doc) {
+		assert.equal(err, null);
+		if (doc != null) {
+			data.txt = doc._id;
+			insertFriend(data);
+			callback();
+		} else {
+			Out = 0;
+			callback();
+		}
+	});
+	};
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findUser(db, function() {
+			db.close();
+			callback(Out);
+		});
+	});
+}
+
+
+function insertFriend (data) {
+  	var insertDocument = function(db, callback) {
+		db.collection('listFriend').update(
+			{"_id": data.email}, {$addToSet: {"friend": data.txt}}
+		, function(err, result) {
+			if (err) { console.log(err);
+				callback();
+				return;
+			}
+    		callback();
+  		});
+	};
+
+	MongoClient.connect(url, function(err, db) {
+ 		assert.equal(null, err);
+  		insertDocument(db, function() {
+      		db.close();
+  		});
+	});
+}
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
+exports.findFriend = findFriend;

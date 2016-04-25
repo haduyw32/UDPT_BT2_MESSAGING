@@ -46,7 +46,7 @@ module.exports = function (app) {
 	app.post('/login', function (req, res, next) {
 		
 		req.on('data', function(chunk) {
-      		var data = hash(chunk); console.log(data);
+      		var data = hash(chunk);
       		if (data.submit == "Register") {
       			res.render('signup.ect', { });
       			return;
@@ -59,7 +59,7 @@ module.exports = function (app) {
 				if (doc == null) {
 					invalid ();
 				}
-				else {
+				else {console.log(doc);
 					res.render('index.ect', { wuser: doc._id, wpass: doc.pass, wname: doc.name });
 				}
 			});

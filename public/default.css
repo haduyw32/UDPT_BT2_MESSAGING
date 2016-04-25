@@ -6,10 +6,116 @@
  
 /*==Style cơ bản cho website==*/
 body {
-  font-family: sans-serif;
-  background-color: #FAF4F0;
-  color: #333;
+    background: #fff;
+    color: #141823;
+    line-height: 1.28;
+    margin: 0;
+    padding: 0;
+    direction: ltr;
+    unicode-bidi: embed;
+    overflow: initial;
 }
+
+.divM {
+      background-color: #fff;
+    display: flex;
+    font-size: 14px;
+    min-width: 320px;
+}
+
+.c00 {
+    background-color: rgba(255, 255, 255, .95);
+    border-bottom: 1px solid rgba(0, 0, 0, .10);
+    box-sizing: border-box;
+    height: 50px;
+    justify-content: space-between;
+    padding: 8px;
+    width: 100%;
+    display: flex;
+}
+.c00 .mes {
+    flex-basis: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 7px 0 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.c01 {
+    background-color: rgba(255, 255, 255, .95);
+    border-bottom: 1px solid rgba(0, 0, 0, .10);
+    border-right: 1px solid rgba(0, 0, 0, .10);
+    box-sizing: border-box;
+    height: 50px;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    z-index: 201;
+}
+
+.g1 {
+  flex: 0 0 25%;
+    max-width: 420px;
+    min-width: 40%;
+    float: left;
+}
+
+.g2 {
+       border-left: 1px solid rgba(0, 0, 0, .30);
+    display: flex;
+    /* flex: 3; */
+    flex-direction: column;
+    min-width: 0;
+    float: left;
+    min-width: 59.8%;
+}
+
+.lablec01 {
+     border: 1px solid #bdc7d8;
+    box-sizing: border-box;
+    cursor: default;
+    display: inline-block;
+    font-weight: normal;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    min-width: 100%;  
+    padding: 12px 12px;
+}
+.lablec01 .lablec01in{
+    background-color: #f6f7f8;
+    border-radius: 3px;
+    border-style: none;
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 30px;
+    min-width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #menu ul {
   background: #1F568B;
   list-style-type: none;
