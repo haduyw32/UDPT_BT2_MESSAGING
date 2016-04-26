@@ -34,9 +34,22 @@ function insertUser (data, callback) {
   		});
 	};
 
+	var insertbeginM = function(db) {
+		db.collection('listMes').insertOne( {
+			"_id": data.email,
+			"friend": []
+		}, function(err, result) {
+			if (err) {
+				docOut = 0;
+				return;
+			}
+  		});
+	};
+
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
  		insertbegin(db);
+ 		insertbeginM(db);
   		insertDocument(db, function() {
       		db.close();
       		callback(docOut);
@@ -66,7 +79,7 @@ function loginUser (data, callback) {
 	});
 }
 
-function findFriend (data, callback) { //hoan thanh: 1, loi: 0
+function findFriend (data, callback) { //hoan thanh: 1, loi: 0|| email: username, txt: elm.value
 	var Out = 1;
 	var findUser = function(db, callback) {
 	var cursor =db.collection('userInfo').find( { name: data.txt } );
@@ -74,7 +87,8 @@ function findFriend (data, callback) { //hoan thanh: 1, loi: 0
 		assert.equal(err, null);
 		if (doc != null) {
 			data.txt = doc._id;
-			insertFriend(data);
+			var temp = {email: data.email, uf: doc._id, name: doc.name};
+			insertFriend(temp);
 			callback();
 		} else {
 			Out = 0;
@@ -95,23 +109,90 @@ function findFriend (data, callback) { //hoan thanh: 1, loi: 0
 function insertFriend (data) {
   	var insertDocument = function(db, callback) {
 		db.collection('listFriend').update(
-			{"_id": data.email}, {$addToSet: {"friend": data.txt}}
+			{"_id": data.email}, {$addToSet: {"friend": {_id:data.uf, name: data.name}}}
 		, function(err, result) {
 			if (err) { console.log(err);
-				callback();
 				return;
 			}
     		callback();
   		});
 	};
 
+	var insertBeginM = function(db, callback) {
+		db.collection('listMes').update(
+			{"_id": data.email}, {$addToSet: {"friend": {_id:data.uf, mes: []}}}
+		, function(err, result) {
+			if (err) { console.log(err);
+				callback();
+				return;
+			}
+  		});
+	};
+
 	MongoClient.connect(url, function(err, db) {
  		assert.equal(null, err);
+ 		insertBeginM(db);
   		insertDocument(db, function() {
-      		db.close();
+  			insertBeginM(db, function() {
+      			db.close();
+      		});
   		});
 	});
 }
+
+//----------------------------------------------------------------------
+
+
+function getList (data, callback) {
+	var docOut;
+	var findUser = function(db, callback) {
+	var cursor =db.collection('listFriend').find( { _id: data.email } );
+	cursor.each(function(err, doc) {
+		assert.equal(err, null);
+		if (doc != null) {
+			docOut = doc;
+		} else {
+			callback();
+		}
+	});
+	};
+
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findUser(db, function() {
+			db.close();
+			callback(docOut);
+		});
+	});
+}
+
+
+function getMes (data, callback) { //email || userf
+	var docOut;
+	var findUser = function(db, callback) {
+	var cursor =db.collection('listMes').find( { _id: data.email}, {friend: {$elemMatch: {_id: data.userf}}} );
+	cursor.each(function(err, doc) {
+		assert.equal(err, null);
+		if (doc != null) {
+			docOut = doc; 
+		} else {
+			callback();
+		}
+	});
+	};
+
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		findUser(db, function() {
+			db.close();
+			callback(docOut);
+		});
+	});
+}
+
+
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.findFriend = findFriend;
+exports.getList = getList;
+exports.getMes = getMes;
