@@ -5,18 +5,20 @@
         <title>Home</title>
         <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript">
+    var email = "<%-@wuser %>";
+    var pass = "<%-@wpass %>";
+    var name = "<%-@wname %>";
+    var arrFriend = [];//{_id, name}
     <% if @wuser? : %> //save côkie
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";";
         }
         $(document).ready(function() {
-            var email = "<%-@wuser %>";
-            var pass = "<%-@wpass %>";
             setCookie("cemail", email);
             setCookie("cpass", pass);
             window.location.href="/";
         });
-    <% else : %>  //check cookie
+    <% else : %> //check cookie
         function getCookie(cname) {
             var name = cname + "=";
             var ca = document.cookie.split(';');
@@ -33,9 +35,9 @@
         }
 
         function checkCookie() {
-            var username=getCookie("cemail");
-            var pass=getCookie("cpass");
-            if (username!="" && pass!="") {
+            email=getCookie("cemail");
+            pass=getCookie("cpass");
+            if (email!="" && pass!="") {
                 return true;
             } else {
                return false;
@@ -61,9 +63,11 @@
                                 $.post("/addfriend", {email: username, txt: elm.value},  function(data) {
                                     if (data == 'done') {
                                         alert("Đã thêm bạn " + elm.value + " thành công");
+                                        return;
                                     }
                                     else {
                                         alert("Tài khoản này không tồn tại");
+                                        return;
                                     }
                                 });                                
                             }
@@ -71,14 +75,37 @@
                         <label class="lablec01"><input type="text" class="lablec01in"  placeholder="Tìm bạn" autocomplete="off" onkeydown="if (event.keyCode == 13) FindFriend(this)"></input></label>
                     </div>
                     <div>
-                        <ul class="convList">
-                            <a href=""><li class="lli">
-                                <p>TTTT</p>
-                            </li></a>
-                            <a><li class ="lli">
-                                <p>TTTT</p>
-                            </li></a>
+                        <ul class="convList" id="conl">
                         </ul>
+                        <script>
+                            $.post("/getlist", {email: email},  function(data) {
+                               arrFriend = data;
+                               var str = "";
+                               for (var i=0; i<arrFriend.length; i++) {
+                                    var str = str + "<a><li onclick=getMes(this) class=lli name=f"+ i.toString() +"> <p>" + arrFriend[i].name +"</p>  </li></a>";
+                               }
+                               document.getElementById("conl").innerHTML = str;
+                               return;
+                            });
+
+                            function getMes(elm) {
+                                var temp = elm.getAttribute("name");
+                                var pos = temp.substring(1, temp.length);
+                                pos = parseInt(pos);
+                                var username=getCookie("cemail");
+                                $.post("/getmes", {email: username, userf: arrFriend[pos]._id},  function(data) {//data la mang tin nhan
+                                    if (data.length==0) {
+                                        return;
+                                    }
+                                    var str = "";
+                                    /*for (var i=0; i<data.length; i++) {
+                                        if (data[i])
+
+                                    }*/
+                                });
+                                //alert(parseInt(pos));
+                            }
+                        </script>
                     </div>
                 </div>
            </div>
@@ -94,8 +121,12 @@
                    </script>
                    <div class="logout"><a href=""><img onclick="logout()" src="images\logout.png" width="40" style="vertical-align:bottom"/></a></div>
                </div>
-               <div class="c11">
-                   conten
+               <div class="c11" id="conten">
+                   <div class="mesf"><p> hghbh</p></div>
+                   <hr size="1" align="center" width="90%"/>
+                   <div class="mesm"><p> dgfgf</p></div>
+                   <hr size="1" align="center" width="90%"/>
+
                </div>
                <div class="inmes">
                 <input name="pass" type="text" class="newmes" placeholder="Nhập tin nhắn mới..."/>

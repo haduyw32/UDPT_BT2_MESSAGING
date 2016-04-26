@@ -16,4 +16,29 @@ module.exports = function (app) {
       		
       	});
     });
+
+    app.post('/getlist', function (req, res, next) {
+		req.on('data', function(chunk) {
+      		var data = hash(chunk);
+      		db.getList(data, function(out) {
+      			res.send(out.friend);
+      			return;
+			});
+      		
+      	});
+    });
+
+
+    //getmes", {email: username, userf: arrFriend[pos]._id}
+    app.post('/getmes', function (req, res, next) {
+    	req.on('data', function(chunk) {
+      		var data = hash(chunk);
+      		db.getMes(data, function(out) {
+      			console.log (out.friend[0].mes);
+      			res.send(out.friend[0].mes);
+      			return;
+			});
+      	});
+    });
+
 }
