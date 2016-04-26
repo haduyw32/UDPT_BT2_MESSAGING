@@ -3,6 +3,7 @@
 **Name of your app** Đây là trang web cho phép người dùng gửi tin nhắn. Thời gian nộp: 0h ngày 27/4.
 
 Danh sách sinh viên:    1312024 - Phạm Trọng Ân
+                        
                         1312080 - Hà Xuân Duy
 
 URL: **Insert your Heroku URL here**
@@ -46,6 +47,7 @@ Các chuẩn đầu ra cần thực hiện:
 Here's a walkthrough of implemented user stories:
 
 [![Video Walkthrough Here](https://img.youtube.com/vi/G7wXqagpkEs/0.jpg)](https://www.youtube.com/watch?v=G7wXqagpkEs)
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
