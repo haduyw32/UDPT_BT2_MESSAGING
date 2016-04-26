@@ -59,7 +59,7 @@ module.exports = function (app) {
 				if (doc == null) {
 					invalid ();
 				}
-				else {console.log(doc);
+				else {
 					res.render('index.ect', { wuser: doc._id, wpass: doc.pass, wname: doc.name });
 				}
 			});

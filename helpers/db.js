@@ -229,16 +229,9 @@ function sendMes (data) { //email: username, userf: fcus, value: elm.value}
 	});
 }
 
-
-
-function sendMesf (data) { //email: username, userf: fcus, value: elm.value}
-  	
-}
-
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.findFriend = findFriend;
 exports.getList = getList;
 exports.getMes = getMes;
-exports.sendMesm = sendMesm;
-exports.sendMesf = sendMesf;
+exports.sendMes = sendMes;

@@ -14,11 +14,12 @@
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";";
         }
-        $(document).ready(function() {
+        function coo() {
             setCookie("cemail", email);
             setCookie("cpass", pass);
             window.location.href="/";
-        });
+        };
+        coo();
     <% else : %> //check cookie
         function getCookie(cname) {
             var name = cname + "=";
