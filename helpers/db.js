@@ -190,9 +190,55 @@ function getMes (data, callback) { //email || userf
 	});
 }
 
+function sendMes (data) { //email: username, userf: fcus, value: elm.value}
+	var insertm = function(db, callback) {
+		db.collection('listMes').update(
+			{ _id: data.email, friend: {$elemMatch: {_id: data.userf}}}, {$push: {"friend.$.mes": {type: 1, conten: data.value}}}
+		, function(err, result) {
+			if (err) { console.log(err);
+				callback();
+				return;
+			}
+  		});
+	};
+
+	var insertf = function(db, callback) {
+		db.collection('listMes').update(
+			{ _id: data.userf, friend: {$elemMatch: {_id: data.email}}}, {$push: {"friend.$.mes": {type: 0, conten: data.value}}}
+		, function(err, result) {console.log (data);
+			if (err) { console.log(err);
+				return;
+			}
+    		callback();
+  		});
+	};
+	MongoClient.connect(url, function(err, db) {
+ 		assert.equal(null, err);
+  		insertf(db, function() {
+  			db.close();
+  		});
+	});
+
+	MongoClient.connect(url, function(err, db) {
+ 		assert.equal(null, err);
+  		insertm(db, function() {
+  			insertf(db, function() {
+  				db.close();
+  			});
+      	});
+	});
+}
+
+
+
+function sendMesf (data) { //email: username, userf: fcus, value: elm.value}
+  	
+}
 
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
 exports.findFriend = findFriend;
 exports.getList = getList;
 exports.getMes = getMes;
+exports.sendMesm = sendMesm;
+exports.sendMesf = sendMesf;

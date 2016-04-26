@@ -21,6 +21,10 @@ module.exports = function (app) {
 		req.on('data', function(chunk) {
       		var data = hash(chunk);
       		db.getList(data, function(out) {
+      			if (out == null) {
+      				res.send(null);
+      				return;      				
+      			}
       			res.send(out.friend);
       			return;
 			});
@@ -34,11 +38,18 @@ module.exports = function (app) {
     	req.on('data', function(chunk) {
       		var data = hash(chunk);
       		db.getMes(data, function(out) {
-      			console.log (out.friend[0].mes);
       			res.send(out.friend[0].mes);
       			return;
 			});
       	});
     });
 
+    //$.post("/sendMes", {email: username, userf: fcus, value: elm.value},  function(data) {
+    app.post('/sendMes', function (req, res, next) {
+    	req.on('data', function(chunk) {
+      		var data = hash(chunk);
+      		db.sendMesf(data);
+      		db.sendMesm(data);
+      	});
+    });
 }

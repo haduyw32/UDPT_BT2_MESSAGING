@@ -9,6 +9,7 @@
     var pass = "<%-@wpass %>";
     var name = "<%-@wname %>";
     var arrFriend = [];//{_id, name}
+    var fcus;
     <% if @wuser? : %> //save côkie
         function setCookie(cname, cvalue) {
             document.cookie = cname + "=" + cvalue + ";";
@@ -79,7 +80,11 @@
                         </ul>
                         <script>
                             $.post("/getlist", {email: email},  function(data) {
+                                if (data == null) {
+                                    return;
+                                }
                                arrFriend = data;
+                               fcus=arrFriend[0]._id;
                                var str = "";
                                for (var i=0; i<arrFriend.length; i++) {
                                     var str = str + "<a><li onclick=getMes(this) class=lli name=f"+ i.toString() +"> <p>" + arrFriend[i].name +"</p>  </li></a>";
@@ -89,19 +94,24 @@
                             });
 
                             function getMes(elm) {
+                                document.getElementById("conten").innerHTML = "";
                                 var temp = elm.getAttribute("name");
-                                var pos = temp.substring(1, temp.length);
+                                var pos = temp.substring(1, temp.length);                                
                                 pos = parseInt(pos);
+                                fcus = arrFriend[pos]._id;
                                 var username=getCookie("cemail");
-                                $.post("/getmes", {email: username, userf: arrFriend[pos]._id},  function(data) {//data la mang tin nhan
+                                $.post("/getmes", {email: username, userf: arrFriend[pos]._id},  function(data) {//data la mang tin nhan|| type-conten
                                     if (data.length==0) {
                                         return;
                                     }
                                     var str = "";
-                                    /*for (var i=0; i<data.length; i++) {
-                                        if (data[i])
-
-                                    }*/
+                                    for (var i=0; i<data.length; i++) {
+                                        if (data[i].type == 1)
+                                            str = str + "<div class=mesm><p>" +data[i].conten+ "</p></div><hr size=1 align=center width=90%/>";
+                                        else
+                                            str = str + "<div class=mesf><p>" +data[i].conten+"</p></div><hr size=1 align=center width=90%/>";
+                                    }
+                                    document.getElementById("conten").innerHTML = str;
                                 });
                                 //alert(parseInt(pos));
                             }
@@ -122,14 +132,22 @@
                    <div class="logout"><a href=""><img onclick="logout()" src="images\logout.png" width="40" style="vertical-align:bottom"/></a></div>
                </div>
                <div class="c11" id="conten">
-                   <div class="mesf"><p> hghbh</p></div>
-                   <hr size="1" align="center" width="90%"/>
-                   <div class="mesm"><p> dgfgf</p></div>
-                   <hr size="1" align="center" width="90%"/>
 
                </div>
                <div class="inmes">
-                <input name="pass" type="text" class="newmes" placeholder="Nhập tin nhắn mới..."/>
+                <input name="pass" type="text" class="newmes" placeholder="Nhập tin nhắn mới..." onkeydown="if (event.keyCode == 13) sendNewMes(this)"/>
+                    <script>
+                        function sendNewMes(elm) {
+                            var element = document.getElementById("conten");
+                            var str = element.innerHTML + "<div class=mesm><p>" +elm.value+ "</p></div><hr size=1 align=center width=90%/>";
+                            element.innerHTML = str;
+                            var username=getCookie("cemail");
+                            $.post("/sendMes", {email: username, userf: fcus, value: elm.value},  function(data) {
+                                elm.value = null;
+                                return;
+                            });
+                        }
+                    </script>
                </div>
            </div>
        </div>
