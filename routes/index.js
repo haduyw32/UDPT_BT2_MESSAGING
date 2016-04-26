@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var login = require('./login');
-var login = require('./login');
 var HandlerClient = require('./HandlerClient');
 
 router.get('/login', function(req, res) {

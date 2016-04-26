@@ -2,7 +2,8 @@
 
 **Name of your app** Đây là trang web cho phép người dùng gửi tin nhắn. Thời gian nộp: 0h ngày 27/4.
 
-Danh sách sinh viên: **Your Name Here**
+Danh sách sinh viên:    1312024 - Phạm Trọng Ân
+                        1312080 - Hà Xuân Duy
 
 URL: **Insert your Heroku URL here**
 
@@ -39,12 +40,12 @@ Các chuẩn đầu ra cần thực hiện:
 * [ ] Git với Centralize Workflow
 * [ ] Git theo Feature Branch Workflow
 * [ ] Git theo Feature Branch Workflow có Pull Request
-* [ ] Git theo Gitflow Workflow
+* [x] Git theo Gitflow Workflow
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](relative-path-to-your-gif-file-on-github-or-absolute-path-to-file-on-imgur-or-youtube)
+![https://youtu.be/G7wXqagpkEs](relative-path-to-your-gif-file-on-github-or-absolute-path-to-file-on-imgur-or-youtube)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

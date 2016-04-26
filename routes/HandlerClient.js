@@ -4,7 +4,7 @@ var hash = require('../helpers/hash');
 module.exports = function (app) {
 	app.post('/addfriend', function (req, res) {
 		req.on('data', function(chunk) {
-      		var data = hash(chunk);
+      		var data = hash(chunk); console.log(data);
       		db.findFriend(data, function(out) {
 				if (out == 0) {
 					res.end('none');
@@ -48,8 +48,7 @@ module.exports = function (app) {
     app.post('/sendMes', function (req, res, next) {
     	req.on('data', function(chunk) {
       		var data = hash(chunk);
-      		db.sendMesf(data);
-      		db.sendMesm(data);
+      		db.sendMes(data);
       	});
     });
 }
