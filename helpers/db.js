@@ -1,7 +1,8 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://localhost:27017/udpt';
+var url = 'mongodb://udpt:ABab1234@ds021711.mlab.com:21711/udpt';
+//var url = 'mongodb://localhost:27017/udpt';
 
 
 function insertUser (data, callback) {
@@ -228,6 +229,8 @@ function sendMes (data) { //email: username, userf: fcus, value: elm.value}
       	});
 	});
 }
+
+
 
 exports.insertUser = insertUser;
 exports.loginUser = loginUser;
