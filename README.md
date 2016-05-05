@@ -6,7 +6,7 @@ Danh sách sinh viên:    1312024 - Phạm Trọng Ân
                         
                         1312080 - Hà Xuân Duy
 
-URL: **https://udpt-bt2-13120024-1312080.herokuapp.com/**
+URL: **https://udpt-bt2-1312024-1312080.herokuapp.com/**
 
 ## Chức năng
 
